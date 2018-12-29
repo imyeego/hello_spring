@@ -11,10 +11,10 @@
             .then(function (json) {
                 for (var i = 0; i < json.length; i ++){
                     var customer = json[i];
-                    console.log(customer.name);
+                    log(customer.name);
                 }
             })
-            .catch(function (error){ console.log(error.message) });
+            .catch(function (error){ log(error.message) });
     };
 
 
@@ -34,10 +34,10 @@
                 return res.json();
             })
             .then(function (json) {
-                console.log(json);
+                log(json);
             })
             .catch(function (error) {
-                console.log(error.message);
+                log(error.message);
             });
 
     };
@@ -61,10 +61,10 @@
                 return res.json();
             })
             .then(json => {
-                console.log(json);
+                log(json);
             })
             .catch(error => {
-                console.log(error.message);
+                log(error.message);
             });
     };
 
@@ -86,10 +86,10 @@
                 return res.json();
             })
             .then(json => {
-                console.log(json);
+                log(json);
             })
             .catch(error => {
-                console.log(error.message);
+                log(error.message);
             });
 
 
@@ -116,7 +116,7 @@
                 return res.json();
             })
             .then(json => {
-                console.log(json);
+                log(json);
             })
             .catch(error => {
                 log(error.message);
