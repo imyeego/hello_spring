@@ -123,6 +123,17 @@
             });
     };
 
+    window.download_file = function () {
+        const url = "http://localhost:8080/download/设计模式之禅高清扫描版.pdf";
+
+        fetch(url, {
+            method : 'get',
+            headers : {
+                'Range' : '0-'
+            }
+        })
+    };
+
     function img2base64(file) {
         const promise = new Promise(function (resolve, reject) {
             const reader = new FileReader();

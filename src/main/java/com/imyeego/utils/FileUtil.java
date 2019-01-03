@@ -6,7 +6,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class FileNameGenerator {
+public class FileUtil {
 
     public static String generatorFileName(final String originalFileName){
 
@@ -28,7 +28,7 @@ public class FileNameGenerator {
         return fileName;
     }
 
-    public static String getUploadPath(HttpServletRequest request, String dir){
+    public static String getPath(HttpServletRequest request, String dir){
         String path = request.getSession().getServletContext().getRealPath("/" + dir);
         File filePath = new File(path);
         System.out.println("文件的保存路径：" + path);

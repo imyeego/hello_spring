@@ -1,8 +1,7 @@
 package com.imyeego.controller;
 
 import com.imyeego.pojo.BaseResult;
-import com.imyeego.utils.FileNameGenerator;
-import org.springframework.stereotype.Controller;
+import com.imyeego.utils.FileUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,8 +15,8 @@ public class FileUploadController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public BaseResult upload(@RequestParam("file") final MultipartFile file, HttpServletRequest request){
 
-        String path = FileNameGenerator.getUploadPath(request, "upload");
-        String fileName = FileNameGenerator.generatorFileName(file.getOriginalFilename());
+        String path = FileUtil.getPath(request, "upload");
+        String fileName = FileUtil.generatorFileName(file.getOriginalFilename());
 
         File targetFile = new File(path, fileName);
 
@@ -34,8 +33,8 @@ public class FileUploadController {
     @RequestMapping(value = "/upload_base64", method = RequestMethod.POST)
     public BaseResult uploadFromBase64(@RequestParam("base64") final String base64, HttpServletRequest request){
         System.out.println("------" + base64 + "------");
-        String path = FileNameGenerator.getUploadPath(request, "upload");
-        FileNameGenerator.base64ToImage(base64, path);
+        String path = FileUtil.getPath(request, "upload");
+        FileUtil.base64ToImage(base64, path);
         return new BaseResult(200, "success");
 
     }
