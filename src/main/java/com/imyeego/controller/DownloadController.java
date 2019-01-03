@@ -3,15 +3,14 @@ package com.imyeego.controller;
 import com.imyeego.pojo.BaseResult;
 import com.imyeego.utils.FileUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.RandomAccessFile;
+import java.io.*;
+import java.net.URLEncoder;
 
 @Controller
 public class DownloadController {
@@ -25,11 +24,13 @@ public class DownloadController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/download/pycharm.exe", method = RequestMethod.GET)
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
     public BaseResult download(HttpServletRequest request, HttpServletResponse response){
         String path = FileUtil.getPath(request, "download");
-        File file = new File(path, "pycharm.exe");
-        System.out.println(file.getName());
+        File file = null;
+        String headerName = "设计模式之禅高清扫描版.pdf";
+        file = new File(path, headerName);
+
         if (!file.exists()) return new BaseResult(200, "File not existed...");
         String range = request.getHeader("Range");
         if (range == null){
@@ -42,12 +43,19 @@ public class DownloadController {
         String start = range.substring(6, range.indexOf("-"));
         long from = Long.parseLong(start);
         long downloadSize = file.length()- from;
+        response.setCharacterEncoding("utf-8");
+
         response.setHeader(CONTENT_RANGE, start + "-" + end + "/" + file.length());
         response.setHeader(CONTENT_TYPE, MIMETYPE);
         long contentLength = file.length() - Long.parseLong(start);
         response.setHeader(CONTENT_LENGTH, contentLength + "");
-        response.setHeader(CONTENT_DISPOSITION, String.format("attachment; filename=%s", file.getName()));
 
+        try {
+            response.setHeader(CONTENT_DISPOSITION, String.format("attachment; filename=%s", URLEncoder.encode(headerName, "UTF-8")));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(headerName);
 
         try(RandomAccessFile in = new RandomAccessFile(file, "rw");
             OutputStream out = response.getOutputStream()){
