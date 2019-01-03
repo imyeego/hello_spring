@@ -9,6 +9,7 @@
 - GET form/json
 - POST form.json
 - 小文件上传 file/base64
+- 大文件下载，支持断点续传，适用于浏览器和客户端
 - 切面实现打印日志、函数执行时间统计
 
 #### Tips
