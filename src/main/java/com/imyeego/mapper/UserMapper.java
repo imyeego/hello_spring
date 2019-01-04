@@ -7,4 +7,6 @@ import org.mybatis.spring.annotation.MapperScan;
 public interface UserMapper {
 
     User login(String username);
+
+    User findById(Long id);
 }

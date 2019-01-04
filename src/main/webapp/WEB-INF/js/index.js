@@ -139,6 +139,26 @@
         });
     };
 
+
+    window.accessToken = function (id) {
+        const url = "http://localhost:8080/accessToken/" + id;
+
+        fetch(url, {
+            method : 'get'
+        }).then(res => {
+            if (!res.ok) {
+                throw new Error("HTTP error, status = " + res.status);
+            }
+            return res.json();
+        }).then(json => {
+            log(json.token);
+        }).catch(error => {
+            log(error);
+        });
+
+
+    };
+
     function img2base64(file) {
         const promise = new Promise(function (resolve, reject) {
             const reader = new FileReader();

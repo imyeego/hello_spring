@@ -7,6 +7,7 @@ import com.imyeego.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,8 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/customer_name", method = RequestMethod.POST)
-    public Customer findByName(@RequestParam("id") String id, @RequestParam("name") String name){
+    public Customer findByName(@RequestParam("id") String id, @RequestParam("name") String name, HttpServletResponse response){
+        response.setStatus(200);
         return customerService.findByName(name);
 
     }

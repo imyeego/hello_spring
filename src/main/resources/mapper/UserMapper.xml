@@ -6,4 +6,9 @@
     <select id="login" parameterType="java.lang.String" resultType="com.imyeego.pojo.User">
         SELECT id, username, password FROM tb_user WHERE username = #{username, jdbcType=VARCHAR}
     </select>
+
+    <select id="findById" parameterType="Long" resultType="com.imyeego.pojo.User">
+        SELECT id, username, password FROM tb_user WHERE id = #{id, jdbcType=VARCHAR}
+
+    </select>
 </mapper>
