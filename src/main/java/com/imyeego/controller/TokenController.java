@@ -1,6 +1,7 @@
 package com.imyeego.controller;
 
 import com.imyeego.component.JwtTokenUtil;
+import com.imyeego.exception.ExpiredException;
 import com.imyeego.pojo.TokenResponse;
 import com.imyeego.pojo.User;
 import com.imyeego.service.UserService;
@@ -41,9 +42,11 @@ public class TokenController {
     public TokenResponse refreshToken(HttpServletRequest request){
         String authToken = request.getHeader(tokenHeader);
         String token = null;
-
-
-
+        if (authToken != null){
+            token = jwtTokenUtil.refreshToken(authToken);
+        } else {
+            return new TokenResponse(null);
+        }
         return new TokenResponse(token);
     }
 }

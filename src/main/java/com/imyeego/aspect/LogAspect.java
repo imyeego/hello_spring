@@ -4,8 +4,13 @@ package com.imyeego.aspect;
 import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Aspect
 @Component
@@ -21,8 +26,12 @@ public class LogAspect {
 
     @Before(value = "pointCut()")
     public void before(JoinPoint joinPoint){
-        String method = joinPoint.getSignature().getName();
-        System.out.println("---------" + method + "-------------");
+        Signature method = joinPoint.getSignature();
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+
+        System.out.println("---------" + method.getName() + ": "+ request.getRequestURI() + "-------------");
     }
 
 

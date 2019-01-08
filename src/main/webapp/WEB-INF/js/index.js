@@ -44,6 +44,26 @@
 
     };
 
+    window.getUserByName = function (name) {
+        const url = "http://localhost:8080/user/" + name;
+        const token = localStorage.getItem('token');
+        fetch(url, {
+            method : "get",
+            headers : {
+                'Authorization' : token
+            }
+        }).then(res => {
+            if (!res.ok){
+                throw new Error("HTTP error, status = " + res.status);
+            }
+            return res.json();
+        }).then(json => {
+            log(json);
+        }).catch(error => {
+            log(error);
+        });
+    };
+
 
     window.post_form = function () {
         let url = "http://localhost:8080/customer_name";
@@ -139,6 +159,27 @@
         });
     };
 
+    window.refreshToken = function () {
+        const url = "http://localhost:8080/refreshToken";
+        const token = localStorage.getItem('token');
+        fetch(url, {
+            method : "get",
+            headers : {
+                'Authorization' : token
+            }
+        }).then(res => {
+            if (!res.ok){
+                throw new Error("HTTP error, status = " + res.status);
+            }
+            return res.json();
+        }).then(json => {
+            localStorage.setItem('token', json.token);
+            log(json);
+        }).catch(error => {
+            log(error);
+        });
+    };
+
 
     window.accessToken = function (id) {
         const url = "http://localhost:8080/accessToken/" + id;
@@ -151,7 +192,15 @@
             }
             return res.json();
         }).then(json => {
-            log(json.token);
+            let token = localStorage.getItem('token');
+            if (token == null){
+                localStorage.setItem('token', json.token);
+            } else {
+                if (token !== json.token){
+                    localStorage.setItem('token', json.token);
+                }
+            }
+            log(json);
         }).catch(error => {
             log(error);
         });

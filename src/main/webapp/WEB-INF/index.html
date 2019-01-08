@@ -13,13 +13,21 @@
         <input type="file" class="form-control-file" id="exampleFormControlFile1">
     </div>
 
-    <button type="button" class="btn btn-primary" id="submit">Primary</button>
+    <button type="button" class="btn btn-primary" id="access">Access</button>
+    <button type="button" class="btn btn-default" id="refresh">Refresh</button>
 </form>
 <script type="text/javascript">
-    document.getElementById("submit").onclick = ev => {
+    document.getElementById("access").onclick = ev => {
         var file = document.getElementById("exampleFormControlFile1").files[0];
         // window.upload_file_base64(file);
-        window.accessToken(1);
+        // window.accessToken(1);
+        window.refreshToken()
+
+    };
+
+    document.getElementById("refresh").onclick = ev => {
+        // window.refreshToken();
+        window.getUserByName("liuzhao");
     };
 
 
