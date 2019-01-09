@@ -5,9 +5,13 @@ import com.imyeego.pojo.User;
 import com.imyeego.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 @Service
 public class UserServiceImpl implements UserService {
 

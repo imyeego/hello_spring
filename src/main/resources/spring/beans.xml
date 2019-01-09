@@ -2,16 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context.xsd"
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
        >
 
     <context:component-scan base-package="com.imyeego">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     <context:property-placeholder location="classpath*:resource/*.properties"/>
+
+
 
     <!-- 数据库连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -44,6 +48,10 @@
 
         <!-- 扫描Mapper层的配置文件 -->
         <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
+
+        <!--<property name="transactionFactory">-->
+            <!--<bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory" />-->
+        <!--</property>-->
     </bean>
 
     <!-- 使用mybatis的接口代理开发模式(必须保证接口和对应的mybatis的xml名称相同，且在一个文件夹内) -->
@@ -62,6 +70,10 @@
         <property name="maxUploadSize" value="10240000" />
     </bean>
 
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
-
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+    <!--<tx:jta-transaction-manager/>-->
 </beans>

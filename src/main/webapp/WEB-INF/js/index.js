@@ -208,6 +208,35 @@
 
     };
 
+    window.transfer = function () {
+        const url = "http://localhost:8080/transfer/admin";
+        const token = localStorage.getItem('token');
+        const data = {
+            fromId : 1,
+            toId : 2,
+            money : 100000.00
+        };
+        fetch(url, {
+            method: "post",
+            headers : {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+                'Authorization' : token
+            },
+            body : JSON.stringify(data)
+        }).then(res => {
+            if (!res.ok){
+                throw new Error("HTTP error, status = " + res.status);
+            }
+            return res.json();
+        }).then(json => {
+            log(json);
+        }).catch(error => {
+            log(error);
+        })
+
+    };
+
     function img2base64(file) {
         const promise = new Promise(function (resolve, reject) {
             const reader = new FileReader();

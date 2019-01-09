@@ -7,11 +7,12 @@
 #### Features
 
 - GET form/json
-- POST form.json
+- POST form/json
 - 小文件上传 file/base64
 - 大文件下载，支持断点续传，适用于浏览器和客户端
 - 切面实现打印日志、函数执行时间统计
 - 增加token验证功能，新增独立的token获取和刷新接口。token验证使用自定义切面拦截。
+- 数据库操作引入事务机制
 
 #### Tips
 
