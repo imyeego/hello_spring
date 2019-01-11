@@ -121,10 +121,10 @@
         let url = "http://localhost:8080/upload_base64";
 
         img2base64(file).then(data => {
-            let form = new FormData();
-            form.append('base64', data);
-            return form;
-        })
+                let form = new FormData();
+                form.append('base64', data);
+                return form;
+            })
             .then(form => {
                 return fetch(url, {
                     method: 'post',
@@ -132,7 +132,10 @@
                 })
             })
             .then(res => {
-
+                if (!res.ok){
+                    throw new Error("HTTP error, status = " + res.status);
+                }
+                return res.json();
             })
             .then(json => {
                 log(json);
@@ -214,7 +217,7 @@
         const data = {
             fromId : 1,
             toId : 2,
-            money : 100000.00
+            money : 2000.00
         };
         fetch(url, {
             method: "post",

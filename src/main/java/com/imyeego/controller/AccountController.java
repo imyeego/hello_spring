@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AccountController {
 
+
     @Autowired
     private AccountService accountService;
 
@@ -20,7 +21,9 @@ public class AccountController {
         } catch (BalanceNotEnoughException e) {
             return new BaseResult(200, e.getMessage());
         }
-
         return new BaseResult(200, "转账成功!");
+
     }
+
+
 }
