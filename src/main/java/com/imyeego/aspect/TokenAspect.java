@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class TokenAspect {
 
     @Value("${jwt.header}")
