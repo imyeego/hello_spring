@@ -5,6 +5,7 @@ import com.imyeego.utils.FileUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +25,12 @@ public class DownloadController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/download", method = RequestMethod.GET)
-    public BaseResult download(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "/dataApi/androidDB", method = RequestMethod.POST)
+    public BaseResult download(@RequestParam("schoolcode") String username, @RequestParam("taskcode") String password,
+            HttpServletRequest request, HttpServletResponse response){
         String path = FileUtil.getPath(request, "download");
         File file = null;
-        String headerName = "设计模式之禅高清扫描版.pdf";
+        String headerName = "school.db";
         file = new File(path, headerName);
 
         if (!file.exists()) return new BaseResult(200, "File not existed...");
@@ -90,4 +92,6 @@ public class DownloadController {
         return new BaseResult(200, "success");
 
     }
+
+
 }
