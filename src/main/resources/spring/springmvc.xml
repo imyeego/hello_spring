@@ -11,6 +11,8 @@
 
     <context:component-scan base-package="com.imyeego" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.socket.config.annotation.EnableWebSocket"/>
+
     </context:component-scan>
 
     <context:property-placeholder location="classpath:resource/jwt.properties"/>

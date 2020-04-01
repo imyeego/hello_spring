@@ -3,6 +3,8 @@ package com.imyeego.controller;
 import com.imyeego.pojo.HearBean;
 import com.imyeego.pojo.Process;
 import com.imyeego.pojo.ProcessInfo;
+import com.imyeego.websocket.SpringWebSocketHandler;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/bjkw")
 public class CommonController {
+
 
     @RequestMapping(value = "/dataApi/heartBeat", method = RequestMethod.POST)
     public HearBean heartBeat(@RequestParam("harddata") String harddata, @RequestParam("orgcode") String orgcode,
@@ -47,4 +50,5 @@ public class CommonController {
 
         return list;
     }
+
 }

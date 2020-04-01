@@ -211,6 +211,27 @@
 
     };
 
+    window.send = function(userid, message) {
+        const url = "http://localhost:8080/websocket/send";
+        let form = FormData();
+        form.append("userid", userid)
+        form.append("message", message)
+
+        fetch(url, {
+            method: 'post',
+            body: form
+        }).then(res => {
+            if (!res.ok) {
+                throw new Error("HTTP error, status = " + res.status);
+            }
+            return res.json();
+        }).then(json => {
+            log(json);
+        }).catch(e => {
+            log(e);
+        });
+    };
+
     window.transfer = function () {
         const url = "http://localhost:8080/transfer/admin";
         const token = localStorage.getItem('token');

@@ -12,6 +12,7 @@
 
     <context:component-scan base-package="com.imyeego">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.socket.config.annotation.EnableWebSocket"/>
     </context:component-scan>
     <context:property-placeholder location="classpath*:resource/*.properties"/>
 
