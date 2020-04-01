@@ -212,10 +212,10 @@
     };
 
     window.send = function(userid, message) {
-        const url = "http://localhost:8080/websocket/send";
-        let form = FormData();
-        form.append("userid", userid)
-        form.append("message", message)
+        const url = "http://localhost:8088/websocket/send";
+        let form = new FormData();
+        form.append("userid", userid);
+        form.append("message", message);
 
         fetch(url, {
             method: 'post',
