@@ -1,29 +1,30 @@
 package com.imyeego.websocket;
 
+import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpringWebSocketHandler extends TextWebSocketHandler {
+public class CommonWebSocketHandler extends AbstractWebSocketHandler {
 
     private static final String USER_ID = "WEBSOCKET_USERID";
     private static final Map<String, WebSocketSession> users;
-    private static SpringWebSocketHandler INSTANCE;
+    private static CommonWebSocketHandler INSTANCE;
 
     static {
         users = new HashMap<>();
     }
 
-    public static SpringWebSocketHandler instance() {
+    public static CommonWebSocketHandler instance() {
         if (INSTANCE == null) {
-            synchronized (SpringWebSocketHandler.class) {
+            synchronized (CommonWebSocketHandler.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new SpringWebSocketHandler();
+                    INSTANCE = new CommonWebSocketHandler();
                 }
             }
         }
@@ -31,7 +32,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
         return INSTANCE;
     }
 
-    public SpringWebSocketHandler() {
+    public CommonWebSocketHandler() {
     }
 
     @Override
@@ -39,6 +40,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
         super.afterConnectionEstablished(session);
         System.out.println("----websocket 建立连接----");
         String userId = (String) session.getAttributes().get(USER_ID);
+        System.out.println("----设备id:" + userId);
         users.put(userId, session);
         System.out.println("当前连接数:" + users.size());
     }
@@ -46,21 +48,15 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
-        System.out.println("---服务器收到消息--- " + message.toString());
-//        if(message.getPayload().startsWith("#anyone#")){ //单发某人
-//
-//            sendToUser((String)session.getAttributes().get(USER_ID), new TextMessage("服务器单发：" +message.getPayload())) ;
-//
-//        }else if(message.getPayload().startsWith("#everyone#")){
-//
-//            sendToUsers("服务器群发：" +message.getPayload());
-//
-//        }
+        System.out.println("---服务器收到文本消息--- " + message.toString());
+
     }
 
     @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        super.handleTransportError(session, exception);
+    protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
+        super.handleBinaryMessage(session, message);
+        System.out.println("---服务器收到消息--- " + new String(message.getPayload().array()));
+
     }
 
     @Override

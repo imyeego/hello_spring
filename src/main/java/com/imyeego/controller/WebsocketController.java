@@ -1,7 +1,7 @@
 package com.imyeego.controller;
 
 import com.imyeego.pojo.BaseResult;
-import com.imyeego.websocket.SpringWebSocketHandler;
+import com.imyeego.websocket.CommonWebSocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebsocketController {
 
     @Bean
-    public SpringWebSocketHandler websocket() {
-        return SpringWebSocketHandler.instance();
+    public CommonWebSocketHandler websocket() {
+        return CommonWebSocketHandler.instance();
     }
 
     @RequestMapping(value = "/send", method = RequestMethod.POST)
