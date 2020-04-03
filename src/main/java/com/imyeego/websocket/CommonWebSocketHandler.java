@@ -38,17 +38,17 @@ public class CommonWebSocketHandler extends AbstractWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        System.out.println("----websocket 建立连接----");
-        String userId = (String) session.getAttributes().get(USER_ID);
-        System.out.println("----设备id:" + userId);
-        users.put(userId, session);
+        String userId = session.getId();
+        System.out.println("----websocket 建立连接 设备id: " + userId + "----");
+
+        users.put(userId, session); // 使用session.getId可能存在同一个设备多个session的问题，建议在Interceptor的beforeHandshake中设置
         System.out.println("当前连接数:" + users.size());
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
-        System.out.println("---服务器收到文本消息--- " + message.toString());
+        System.out.println("---服务器收到文本消息--- " + message.getPayload());
 
     }
 
@@ -63,9 +63,10 @@ public class CommonWebSocketHandler extends AbstractWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
         if (session.isOpen()) session.close();
-        System.out.println("出现异常,关闭websocket连接");
-        String userId = (String) session.getAttributes().get(USER_ID);
+        String userId = session.getId();
         users.remove(userId);
+        System.out.println("关闭websocket连接，连接数: " + users.size());
+
     }
 
     public void sendToUser(String userId, String message) {
