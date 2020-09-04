@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-//@Aspect
-//@Component
+@Aspect
+@Component
 public class TokenAspect {
 
     @Value("${jwt.header}")
@@ -53,10 +53,7 @@ public class TokenAspect {
                 if (jwtTokenUtil.validateToken(authToken, pathVariable)){
                     result = joinPoint.proceed();
                 }
-            } catch (ExpiredException e) {
-                response.setStatus(401);
-                result = new BaseResult(401, e.getMessage());
-            } catch (MatchException e) {
+            } catch (ExpiredException | MatchException e) {
                 response.setStatus(401);
                 result = new BaseResult(401, e.getMessage());
             } catch (Throwable e){
