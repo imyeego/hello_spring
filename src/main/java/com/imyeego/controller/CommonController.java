@@ -1,6 +1,7 @@
 package com.imyeego.controller;
 
 import com.imyeego.pojo.HearBean;
+import com.imyeego.pojo.LoginBean;
 import com.imyeego.pojo.Process;
 import com.imyeego.pojo.ProcessInfo;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bjkw")
+@RequestMapping("/sfyz")
 public class CommonController {
 
 
@@ -22,8 +25,13 @@ public class CommonController {
         System.out.println("thread name " + Thread.currentThread().getName());
         HearBean bean = new HearBean();
         bean.setMessage("ok");
-        bean.setState("1");
-        bean.setServertime(System.currentTimeMillis());
+        bean.setState(1);
+        bean.setServertime(new Date().getTime());
+        bean.setExamplanid("20200707");
+        bean.setVercode("1000");
+        bean.setVername("3.2.3");
+        bean.setExamplanname("2020北京高考");
+        bean.setData(null);
         return bean;
     }
 
@@ -48,5 +56,6 @@ public class CommonController {
 
         return list;
     }
+
 
 }

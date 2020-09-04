@@ -12,8 +12,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LogAspect {
 
     private long startTimeMillis = 0; // 开始时间
