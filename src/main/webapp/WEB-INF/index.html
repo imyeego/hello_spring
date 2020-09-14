@@ -15,6 +15,7 @@
 
     <button type="button" class="btn btn-primary" id="access">Access</button>
     <button type="button" class="btn btn-default" id="refresh">Refresh</button>
+    <button type="button" class="btn btn-default" id="action">Action</button>
 </form>
 <script type="text/javascript">
     document.getElementById("access").onclick = ev => {
@@ -25,8 +26,14 @@
 
     };
 
+    document.getElementById("action").onclick = ev => {
+        window.getUserByName("liuzhao")
+        // window.send("-1", "hello websocket");
+    };
+
     document.getElementById("refresh").onclick = ev => {
-        window.send("-1", "hello websocket");
+        window.refreshToken()
+        // window.send("-1", "hello websocket");
     };
 
 

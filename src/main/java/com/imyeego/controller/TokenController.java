@@ -30,7 +30,9 @@ public class TokenController {
     public TokenResponse accessToken(@PathVariable long userId){
         System.out.println(tokenHeader);
 
-        User user = userService.findById(userId);
+//        User user = userService.findById(userId);
+        User user = new User(userId, "liuzhao", "admin");
+
         String token = null;
         if (user != null) {
             token = jwtTokenUtil.generateToken(user);

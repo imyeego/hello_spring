@@ -22,8 +22,8 @@ public class UserController {
 
     @RequestMapping(value = "{name}")
     public Object getUserByName(@PathVariable String name){
-//        User user = new User(1L, name, "admin");
-        User user = userService.login(name);
+        User user = new User(1L, name, "admin");
+//        User user = userService.login(name);
         if (user == null) return new BaseResult(200, "未找到相关用户");
         return user;
     }
